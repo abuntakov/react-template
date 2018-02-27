@@ -1,0 +1,14 @@
+{
+	"errorMessage": null,
+	"errorCode": 0,
+	"result": [{
+		"id": 1,
+		"name": "John"
+	}, {
+		"id": 2,
+		"name": "Mike"
+	}, {
+		"id": 3,
+		"name": "Tom"
+	}]
+}
