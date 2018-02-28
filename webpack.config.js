@@ -3,15 +3,19 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV !== 'production'
 
 module.exports = {
+  cache: true,
+  devtool: isDev ? 'inline-source-map' : false,
   context: path.join(__dirname, 'app'),
 
   entry: {
     index: [
+      'babel-polyfill',
+      'react-hot-loader/patch',
       './index',
     ],
   },
@@ -20,6 +24,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       '@app': path.resolve(__dirname, 'app'),
+      '@locale': path.resolve(__dirname, 'locale'),
     },
   },
 
@@ -87,6 +92,6 @@ module.exports = {
     new webpack.DefinePlugin({
       DEVELOPMENT: JSON.stringify(isDev),
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 }
