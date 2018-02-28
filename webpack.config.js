@@ -1,8 +1,12 @@
 /* global __dirname */
-
 'use strict'
 
+const webpack = require('webpack')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const isDev = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   context: path.join(__dirname, 'app'),
@@ -74,4 +78,16 @@ module.exports = {
       }
     ],
   },
+
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new HtmlWebpackPlugin({
+      title: '',
+      template: './index.html',
+    }),
+    new webpack.DefinePlugin({
+      DEVELOPMENT: JSON.stringify(isDev),
+    }),
+    new BundleAnalyzerPlugin(),
+  ],
 }

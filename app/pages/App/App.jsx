@@ -18,16 +18,14 @@ class App extends React.Component {
     } = this.props
 
     return (
-      <MainLayout location={location} routes={this.navigationRoutes}>
+      <MainLayout routes={this.navigationRoutes}>
         {children}
       </MainLayout>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  location: state.getIn(['router', 'locationBeforeTransitions'], {}),
-})
+const mapStateToProps = () => ({})
 
 const ManagedApp = connect(
   mapStateToProps,

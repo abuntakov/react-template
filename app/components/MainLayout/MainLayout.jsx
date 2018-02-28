@@ -6,9 +6,7 @@ function MainLayout({ children, routes }) {
     <div>
       <Navbar routes={routes} />
       <div>
-        <div>
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   )

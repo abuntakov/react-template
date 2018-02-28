@@ -1,5 +1,5 @@
 import React from 'react'
-import renderLinks from './renderLinks'
+import NavbarItem from './NavbarItem'
 
 export default class Navbar extends React.Component {
   render() {
@@ -7,7 +7,7 @@ export default class Navbar extends React.Component {
 
     return (
       <nav className="navbar">
-        {renderLinks(routes, basePath || '', 'navbar')}
+        {NavbarItem(routes, basePath || '', 'navbar')}
       </nav>
     )
   }

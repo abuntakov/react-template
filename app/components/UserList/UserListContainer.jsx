@@ -9,7 +9,7 @@ import { loadUsers } from '@app/modules/user/actions'
 import UserItem from './UserItemContainer'
 
 class RelationTableContainer extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     const { loadedAt, actions } = this.props
 
     if (_isNil(loadedAt)) {
@@ -18,18 +18,18 @@ class RelationTableContainer extends React.Component {
   }
 
   render() {
-    const { users } = this.props
+    const { userIds } = this.props
 
     return (
       <ul className="users__list">
-        {users.map(UserItem)}
+        {userIds.map(UserItem)}
       </ul>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  users: state.getIn(['user', 'result'], List()),
+  userIds: state.getIn(['user', 'result'], List()),
   loadedAt: state.getIn(['user', 'loadedAt']),
   loading: state.getIn(['user', 'loading']),
 })

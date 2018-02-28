@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "jschecker": "bash ./pre-commit/js-checker",
-    "start": "webpack --mode development"
+    "start": "webpack-dev-server --mode development",
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production"
   },
   "pre-commit": [
     "jschecker"
@@ -31,6 +33,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "history": "^4.7.2",
+    "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
     "immutable": "^3.8.2",
     "lodash": "^4.17.5",
     "loglevel": "^1.6.1",

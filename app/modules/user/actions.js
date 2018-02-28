@@ -16,7 +16,6 @@ export const loadUsersSuccess = users => ({
 export const loadUsersFailure = err => ({
   type: actions.LOAD_USERS_FAILURE,
   payload: err,
-  error: true
 })
 
 export default actions
