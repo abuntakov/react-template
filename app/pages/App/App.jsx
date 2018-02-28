@@ -13,7 +13,6 @@ class App extends React.Component {
 
   render() {
     const {
-      location,
       children,
     } = this.props
 
