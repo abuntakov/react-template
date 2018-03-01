@@ -37,22 +37,29 @@ export const getDefaultState = () => fromJS({
   loading: false,
 })
 
+export const composeReducers = (...reducers) => (state, action) => (
+  reducers
+    .reduce(
+      (state, reducer) => reducer(state, action),
+      state
+    )
+)
 
-export const loadEntityReducer = entityName => reducer => (_state, action = {}) => {
+export const loadEntityReducer = (entityName) => {
   const request = createRequestActionName('load')(entityName)
   const success = createSuccessActionName('load')(entityName)
   const failure = createFailureActionName('load')(entityName)
 
-  const state = reducer(_state, action)
-
-  switch (action.type) {
-    case request:
-      return setStartLoading(state)
-    case success:
-      return setResult(action)(state)
-    case failure:
-      return setError(action)(state)
-    default:
-      return state
+  return (state, action = {}) => {
+    switch (action.type) {
+      case request:
+        return setStartLoading(state)
+      case success:
+        return setResult(action)(state)
+      case failure:
+        return setError(action)(state)
+      default:
+        return state
+    }
   }
 }
