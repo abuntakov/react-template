@@ -2,12 +2,11 @@ import moment from 'moment'
 import { fromJS } from 'immutable'
 import { normalize } from '@app/utils/data.helper'
 import l10n from '@locale/strings_ru'
-import actions from "@app/modules/user/actions";
 import {
   createFailureActionName,
   createRequestActionName,
   createSuccessActionName,
-} from "@app/modules/action.helper";
+} from '@app/modules/action.helper'
 
 export const setStartLoading = state => state.set('loading', true)
 
