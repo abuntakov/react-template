@@ -3,9 +3,31 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV !== 'production'
+const extractScss = new ExtractTextPlugin({
+  filename: 'app.[contenthash].css',
+  disable: isDev
+})
+
+const extractScssRule = (type) => {
+  const use = [
+    { loader: 'css-loader' },
+    { loader: 'postcss-loader' },
+    // { loader: 'resolve-url-loader' }
+  ]
+
+  if (type !== 'css') {
+    use.push({ loader: 'sass-loader' })
+  }
+
+  return {
+    use,
+    fallback: { loader: 'style-loader', options: { sourceMap: isDev } }
+  }
+}
 
 module.exports = {
   cache: true,
@@ -16,6 +38,7 @@ module.exports = {
     index: [
       'babel-polyfill',
       'react-hot-loader/patch',
+      './styles/index.scss',
       './index',
     ],
   },
@@ -50,6 +73,7 @@ module.exports = {
         ],
         loader: 'babel-loader?cacheDirectory=true',
       },
+
       {
         test: /\.(ttf|eot|woff2?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=10000',
@@ -58,23 +82,26 @@ module.exports = {
         test: /\.svg/,
         loader: 'svg-url-loader',
       },
+
       {
         test: /\.scss$/,
-        use: [
-          { loader: 'css-loader' },
-          { loader: 'postcss-loader' },
-          { loader: 'resolve-url-loader' },
-          { loader: 'sass-loader' }
-        ],
+        use: extractScss.extract(extractScssRule('scss')),
       },
       {
         test: /\.css$/,
-        use: [
-          { loader: 'css-loader' },
-          { loader: 'postcss-loader' },
-          { loader: 'resolve-url-loader' }
-        ],
+        use: extractScss.extract(extractScssRule('css')),
       },
+      {
+        test: /\.font\.js/,
+        use: extractScss.extract({
+          use: [
+            { loader: 'css-loader' },
+            { loader: 'webfonts-loader' }
+          ],
+          fallback: { loader: 'style-loader', options: { sourceMap: isDev } }
+        }),
+      },
+
       {
         test: /\.(png|jpe?g|gif)$/,
         use: [
@@ -82,18 +109,12 @@ module.exports = {
           { loader: 'image-webpack-loader', options: { bypassOnDebug: true } },
         ],
       },
-      {
-        test: /\.font\.js/,
-        use: [
-          { loader: 'css-loader' },
-          { loader: 'webfonts-loader' }
-        ],
-      }
     ],
   },
 
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    extractScss,
     new HtmlWebpackPlugin({
       title: '',
       template: './index.html',
