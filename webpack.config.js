@@ -29,11 +29,13 @@ module.exports = {
   },
 
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, 'mocks'),
+    historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'https://localhost:8080',
+        target: 'http://localhost:8080',
         changeOrigin: true,
+        pathRewrite: { '^/api': '' },
       },
     }
   },
@@ -78,6 +80,13 @@ module.exports = {
         use: [
           { loader: 'url-loader', options: { limit: 8192 } },
           { loader: 'image-webpack-loader', options: { bypassOnDebug: true } },
+        ],
+      },
+      {
+        test: /\.font\.js/,
+        use: [
+          { loader: 'css-loader' },
+          { loader: 'webfonts-loader' }
         ],
       }
     ],

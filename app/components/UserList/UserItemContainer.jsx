@@ -18,7 +18,7 @@ class UserItemContainer extends React.Component {
 }
 
 const mapStateToProps = (state, { id }) => ({
-  user: state.getIn(['user', 'entities', id]),
+  user: state.getIn(['user', 'entities', String(id)]),
 })
 
 

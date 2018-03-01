@@ -22,7 +22,7 @@ class RelationTableContainer extends React.Component {
 
     return (
       <ul className="users__list">
-        {userIds.map(UserItem)}
+        {userIds.map(id => <UserItem id={id} key={id} />)}
       </ul>
     )
   }

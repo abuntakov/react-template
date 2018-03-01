@@ -1,4 +1,4 @@
 export const loadUsers = () => ({
-  method: 'post',
+  method: 'get',
   url: '/api/users.json',
 })

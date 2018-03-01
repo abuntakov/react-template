@@ -1,9 +1,12 @@
 import moment from 'moment'
 import l10n from '@locale/strings_ru'
+import _keyBy from 'lodash/fp/keyBy'
+
+const toMap = _keyBy('id')
 
 export const normalize = items => ({
   result: items.map(i => i.id),
-  entities: items
+  entities: toMap(items)
 })
 
 export const DEFAULT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm'
