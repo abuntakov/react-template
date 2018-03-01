@@ -1,21 +1,25 @@
-const actions = {
-  LOAD_USERS_REQUEST: 'user/LOAD_USERS_REQUEST',
-  LOAD_USERS_SUCCESS: 'user/LOAD_USERS_SUCCESS',
-  LOAD_USERS_FAILURE: 'user/LOAD_USERS_FAILURE',
-}
+import {
+  createRequestActionName,
+  createSuccessActionName,
+  createFailureActionName,
+} from '../action.helper'
+
+const actions = {}
+
 
 export const loadUsers = () => ({
-  type: actions.LOAD_USERS_REQUEST,
+  type: createRequestActionName('load')('user'),
 })
 
 export const loadUsersSuccess = users => ({
-  type: actions.LOAD_USERS_SUCCESS,
+  type: createSuccessActionName('load')('user'),
   payload: users,
 })
 
-export const loadUsersFailure = err => ({
-  type: actions.LOAD_USERS_FAILURE,
+export const loadUsersFailure = prevAction => err => ({
+  type: createFailureActionName('load')('user'),
   payload: err,
+  prevAction,
 })
 
 export default actions

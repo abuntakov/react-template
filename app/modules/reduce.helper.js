@@ -2,6 +2,12 @@ import moment from 'moment'
 import { fromJS } from 'immutable'
 import { normalize } from '@app/utils/data.helper'
 import l10n from '@locale/strings_ru'
+import actions from "@app/modules/user/actions";
+import {
+  createFailureActionName,
+  createRequestActionName,
+  createSuccessActionName,
+} from "@app/modules/action.helper";
 
 export const setStartLoading = state => state.set('loading', true)
 
@@ -18,7 +24,7 @@ export const setResult = ({ payload }) => (state) => {
 export const setError = ({ error }) => (state) => {
   const errorMessage = (
     error && error.errorMessage
-  ) || l10n.server_error_internal
+  ) || l10n.server_error__internal
 
   return state
     .set('error', errorMessage)
@@ -31,3 +37,23 @@ export const getDefaultState = () => fromJS({
   loadedAt: undefined,
   loading: false,
 })
+
+
+export const loadEntityReducer = entityName => reducer => (_state, action = {}) => {
+  const request = createRequestActionName('load')(entityName)
+  const success = createSuccessActionName('load')(entityName)
+  const failure = createFailureActionName('load')(entityName)
+
+  const state = reducer(_state, action)
+
+  switch (action.type) {
+    case request:
+      return setStartLoading(state)
+    case success:
+      return setResult(action)(state)
+    case failure:
+      return setError(action)(state)
+    default:
+      return state
+  }
+}

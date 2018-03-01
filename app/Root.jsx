@@ -43,9 +43,8 @@ function renderRouteConfigV3(Container, routes, contextPath) {
 
 export default class Root extends React.Component {
   render() {
-    console.log(this.props.routeConfig)
     const children = renderRouteConfigV3(null, this.props.routeConfig, '/')
-    console.log(children, history)
+
     return (
       <Provider store={this.props.store}>
         <ConnectedRouter history={history}>

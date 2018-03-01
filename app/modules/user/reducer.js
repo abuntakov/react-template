@@ -1,23 +1,13 @@
 import {
   getDefaultState,
-  setStartLoading,
-  setResult,
-  setError,
+  loadEntityReducer,
 } from '../reduce.helper'
-
-import actions from './actions'
 
 const initialState = getDefaultState()
 
-export default function reducer(state = initialState, action = {}) {
-  switch (action.type) {
-    case actions.LOAD_USERS_REQUEST:
-      return setStartLoading(state)
-    case actions.LOAD_USERS_SUCCESS:
-      return setResult(action)(state)
-    case actions.LOAD_USERS_FAILURE:
-      return setError(action)(state)
-    default:
-      return state
-  }
+
+function reducer(state = initialState, action = {}) {
+  return state
 }
+
+export default loadEntityReducer('user')(reducer)

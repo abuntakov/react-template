@@ -8,7 +8,7 @@ import { loadUsers } from '@app/modules/user/actions'
 
 import UserItem from './UserItemContainer'
 
-class RelationTableContainer extends React.Component {
+class UserListContainer extends React.Component {
   componentDidMount() {
     const { loadedAt, actions } = this.props
 
@@ -43,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(RelationTableContainer)
+)(UserListContainer)
