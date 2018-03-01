@@ -6,7 +6,7 @@ import { routerMiddleware } from 'react-router-redux'
 import history from './history'
 import rootReducer from './modules/reducers'
 import logic from './modules/logics'
-
+import { catchErrors } from './middlewares'
 import httpClient from './utils/request'
 
 const router = routerMiddleware(history)
@@ -14,6 +14,7 @@ const router = routerMiddleware(history)
 const logicMiddleware = createLogicMiddleware(logic, { httpClient })
 
 const middlewares = [
+  catchErrors,
   logicMiddleware,
   router,
 ]

@@ -22,6 +22,7 @@ export const createLoadEntitiesProcess = (entityName, actionsFn) => async ({ htt
       actionsFn[`load${EntityName}sSuccess`]
     )(result)
   } catch (error) {
+    console.log('???', error)
     _compose(
       dispatch,
       injectPrevAction(action),
