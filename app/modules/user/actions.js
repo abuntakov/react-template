@@ -2,24 +2,13 @@ import {
   createRequestActionName,
   createSuccessActionName,
   createFailureActionName,
+  createAction
 } from '../action.helper'
 
 const actions = {}
 
-
-export const loadUsers = () => ({
-  type: createRequestActionName('load')('user'),
-})
-
-export const loadUsersSuccess = users => ({
-  type: createSuccessActionName('load')('user'),
-  payload: users,
-})
-
-export const loadUsersFailure = prevAction => err => ({
-  type: createFailureActionName('load')('user'),
-  payload: err,
-  prevAction,
-})
+export const loadUsers = createAction(createRequestActionName('load')('user'))
+export const loadUsersSuccess = createAction(createSuccessActionName('load')('user'))
+export const loadUsersFailure = createAction(createFailureActionName('load')('user'))
 
 export default actions

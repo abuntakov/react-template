@@ -15,3 +15,8 @@ export const createSuccessActionName = actionName => entityName => (
 export const createFailureActionName = actionName => entityName => (
   `${entityName}/${getPrefix(actionName)(entityName)}_FAILURE`
 )
+
+export const createAction = actionName => payload => ({
+  type: actionName,
+  payload,
+})

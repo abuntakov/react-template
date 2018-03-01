@@ -7,13 +7,29 @@ import * as routes from '@app/apiRoutes'
 
 import { createRequestActionName } from './action.helper'
 
-export const createLoadEntitiesProcess = (entityName, actionsFn) => ({ httpClient, action }, dispatch, done) => {
+const injectPrevAction = prevAction => action => ({
+  ...action,
+  prevAction,
+})
+
+export const createLoadEntitiesProcess = (entityName, actionsFn) => async ({ httpClient, action }, dispatch, done) => {
   const EntityName = _upperFirst(entityName)
 
-  httpClient(routes[`load${EntityName}s`]())
-    .then(_compose(dispatch, actionsFn[`load${EntityName}sSuccess`]))
-    .catch(_compose(dispatch, actionsFn[`load${EntityName}sFailure`](action)))
-    .then(() => done())
+  try {
+    const result = await httpClient(routes[`load${EntityName}s`]())
+    _compose(
+      dispatch,
+      actionsFn[`load${EntityName}sSuccess`]
+    )(result)
+  } catch (error) {
+    _compose(
+      dispatch,
+      injectPrevAction(action),
+      actionsFn[`load${EntityName}sFailure`]
+    )(error)
+  }
+
+  done()
 }
 
 export const createLoadEntitiesLogic = (entityName, actionsFn) => createLogic({
