@@ -4,6 +4,15 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import history from './history'
 
+const getComponentRoute = (contextPath, component) => (
+  <Route
+    key={contextPath}
+    component={component}
+    path={contextPath}
+    exact
+  />
+)
+
 function renderRouteConfigV3(Container, routes, contextPath) {
   // Resolve route config object in React Router v3.
   const children = []
@@ -21,7 +30,7 @@ function renderRouteConfigV3(Container, routes, contextPath) {
     } else if (item.component && item.childRoutes) {
       children.push(renderRouteConfigV3(item.component, item.childRoutes, newContextPath))
     } else if (item.component) {
-      children.push(<Route key={newContextPath} component={item.component} path={newContextPath} exact />)
+      children.push(getComponentRoute(newContextPath, item.component))
     } else if (item.childRoutes) {
       item.childRoutes.forEach(r => renderRoute(r, newContextPath))
     }
