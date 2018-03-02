@@ -5,6 +5,8 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const _compact = require('lodash/fp/compact')
+
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -119,7 +121,8 @@ module.exports = {
     ],
   },
 
-  plugins: [
+
+  plugins: _compact([
     !isDev && new CleanWebpackPlugin(['dist'], { dry: isDev }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractScss,
@@ -131,5 +134,5 @@ module.exports = {
       DEVELOPMENT: JSON.stringify(isDev),
     }),
     // new BundleAnalyzerPlugin(),
-  ],
+  ]),
 }
