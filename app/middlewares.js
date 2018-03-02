@@ -16,7 +16,7 @@ function forwardErrorToApp(store, { payload, prevAction: { executeWithDelay = 3 
   }))
 }
 
-async function repeatAction(store, { prevAction: { executeWithDelay = 3, ...prevAction } }) {
+function repeatAction(store, { prevAction: { executeWithDelay = 3, ...prevAction } }) {
   clearTimeout(actionsQueue[prevAction.type])
   const timerId = setTimeout(() => {
     store.dispatch({
