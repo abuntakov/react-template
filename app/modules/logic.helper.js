@@ -1,5 +1,6 @@
 import _compose from 'lodash/fp/compose'
 import _upperFirst from 'lodash/fp/upperFirst'
+import _get from 'lodash/fp/get'
 
 import { createLogic } from 'redux-logic'
 
@@ -12,10 +13,18 @@ const injectPrevAction = prevAction => action => ({
   prevAction,
 })
 
+const sleep = time => new Promise(res => setTimeout(res, time * 1000))
+const getDelay = _get('executeWithDelay')
+
 export const createLoadEntitiesProcess = (entityName, actionsFn) => async ({ httpClient, action }, dispatch, done) => {
   const EntityName = _upperFirst(entityName)
 
   try {
+    const delay = +getDelay(action)
+    if (delay) {
+      await sleep(delay)
+    }
+
     const result = await httpClient(routes[`load${EntityName}s`]())
     _compose(
       dispatch,
