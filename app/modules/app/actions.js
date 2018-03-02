@@ -7,8 +7,8 @@ import {
 
 const actions = {}
 
-export const loadUsers = createAction(createRequestActionName('load')('user'))
-export const loadUsersSuccess = createAction(createSuccessActionName('load')('user'))
-export const loadUsersFailure = createAction(createFailureActionName('load')('user'))
+export const getLocation = createAction(createRequestActionName('getLocation')('app'))
+export const getLocationSuccess = createAction(createSuccessActionName('getLocation')('app'))
+export const getLocationFailure = createAction(createFailureActionName('getLocation')('app'))
 
 export default actions

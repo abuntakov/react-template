@@ -5,9 +5,6 @@ import { AppContainer } from 'react-hot-loader'
 import moment from 'moment'
 import 'moment/locale/ru'
 
-import logger from './utils/logger'
-import { getUserLocation, resolveAddressByLocation } from './utils/geo'
-
 import configStore from './configStore'
 import routeConfig from './routeConfig'
 import Root from './Root'
@@ -26,16 +23,6 @@ function renderApp(app) {
 }
 
 renderApp(<Root store={store} routeConfig={routeConfig} />)
-
-getUserLocation()
-  .then((location) => {
-    logger.info('Resolve user location', location)
-    return resolveAddressByLocation(location)
-  })
-  .then((address) => {
-    logger.info('Resolve user address', address)
-  })
-  .catch(error => logger.error('Cannot resolve user location', error))
 
 if (module.hot) {
   module.hot.accept('./routeConfig', () => {
