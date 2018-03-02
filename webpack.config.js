@@ -4,16 +4,14 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-<<<<<<< Updated upstream
-=======
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const _compact = require('lodash/fp/compact')
->>>>>>> Stashed changes
+
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV !== 'production'
 const extractScss = new ExtractTextPlugin({
-  filename: 'app.[contenthash].css',
+  filename: '[name].[hash].css',
   disable: isDev
 })
 
@@ -46,6 +44,12 @@ module.exports = {
       './styles/index.scss',
       './index',
     ],
+  },
+
+  output: {
+    filename: '[name].[hash].js',
+    path: path.join(__dirname, 'dist'),
+    publicPath: '/'
   },
 
   resolve: {
@@ -117,12 +121,9 @@ module.exports = {
     ],
   },
 
-<<<<<<< Updated upstream
-  plugins: [
-=======
+
   plugins: _compact([
     !isDev && new CleanWebpackPlugin(['dist'], { dry: isDev }),
->>>>>>> Stashed changes
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractScss,
     new HtmlWebpackPlugin({

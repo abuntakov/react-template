@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux'
 
 import { loadUsers } from '@app/modules/user/actions'
 
+import Loading from '@app/components/Loading/LoadingComponent'
+
 import UserItem from './UserItemContainer'
 
 class UserListContainer extends React.Component {
@@ -18,7 +20,13 @@ class UserListContainer extends React.Component {
   }
 
   render() {
-    const { userIds } = this.props
+    const { userIds, loading } = this.props
+
+    if (loading) {
+      return (
+        <Loading />
+      )
+    }
 
     return (
       <ul className="users__list">
