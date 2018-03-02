@@ -4,11 +4,12 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV !== 'production'
 const extractScss = new ExtractTextPlugin({
-  filename: 'app.[contenthash].css',
+  filename: '[name].[hash].css',
   disable: isDev
 })
 
@@ -41,6 +42,12 @@ module.exports = {
       './styles/index.scss',
       './index',
     ],
+  },
+
+  output: {
+    filename: '[name].[hash].js',
+    path: path.join(__dirname, 'dist'),
+    publicPath: '/'
   },
 
   resolve: {
@@ -113,6 +120,7 @@ module.exports = {
   },
 
   plugins: [
+    !isDev && new CleanWebpackPlugin(['dist'], { dry: isDev }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractScss,
     new HtmlWebpackPlugin({
