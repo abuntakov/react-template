@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { loadUsers } from '@app/modules/user/actions'
 
 import Loading from '@app/components/Loading/LoadingComponent'
+import ComponentError from '@app/components/Errors/ComponentError'
 
 import UserItem from './UserItemContainer'
 
@@ -20,7 +21,7 @@ class UserListContainer extends React.Component {
   }
 
   render() {
-    const { userIds, loading } = this.props
+    const { userIds, loading, error } = this.props
 
     if (loading) {
       return (
@@ -29,9 +30,16 @@ class UserListContainer extends React.Component {
     }
 
     return (
-      <ul className="users__list">
-        {userIds.map(id => <UserItem id={id} key={id} />)}
-      </ul>
+      <div>
+        <ul className="users__list">
+          <For each="id" of={userIds}>
+            <UserItem id={id} key={id} />
+          </For>
+        </ul>
+        <If condition={error}>
+          <ComponentError message={error} />
+        </If>
+      </div>
     )
   }
 }
@@ -40,6 +48,7 @@ const mapStateToProps = state => ({
   userIds: state.getIn(['user', 'result'], List()),
   loadedAt: state.getIn(['user', 'loadedAt']),
   loading: state.getIn(['user', 'loading']),
+  error: state.getIn(['user', 'error']),
 })
 
 const mapDispatchToProps = dispatch => ({
