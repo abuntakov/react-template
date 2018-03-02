@@ -9,11 +9,8 @@ const globalErrorAction = createAction(createFailureActionName('connection')('ap
 
 const actionsQueue = {}
 
-function forwardErrorToApp(store, { payload, prevAction: { executeWithDelay = 3 } }) {
-  store.dispatch(globalErrorAction({
-    ...omitErrorCode(payload),
-    executeWithDelay
-  }))
+function forwardErrorToApp(store, { payload }) {
+  store.dispatch(globalErrorAction(omitErrorCode(payload)))
 }
 
 function repeatAction(store, { prevAction: { executeWithDelay = 3, ...prevAction } }) {
