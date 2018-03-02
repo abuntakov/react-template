@@ -7,8 +7,8 @@ import {
 
 const actions = {}
 
-export const loadUsers = createAction(createRequestActionName('load')('user'))
-export const loadUsersSuccess = createAction(createSuccessActionName('load')('user'))
-export const loadUsersFailure = createAction(createFailureActionName('load')('user'))
+export const loadUsers = createAction(createRequestActionName('load')('users'))
+export const loadUsersSuccess = createAction(createSuccessActionName('load')('users'))
+export const loadUsersFailure = createAction(createFailureActionName('load')('users'))
 
 export default actions
