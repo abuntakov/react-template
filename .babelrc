@@ -9,6 +9,7 @@
     ["transform-class-properties", { "spec": true }],
     "react-hot-loader/babel",
     "syntax-dynamic-import",
+    "jsx-control-statements",
     [
       "module-resolver",
       {

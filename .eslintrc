@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/eslint-config-airbnb/.eslintrc",
+  "extends": ["./node_modules/eslint-config-airbnb/.eslintrc", "plugin:jsx-control-statements/recommended"],
   "parser": "babel-eslint",
   "globals": {
     "document": true,
@@ -10,6 +10,7 @@
       "babel-module": {}
     }
   },
+  "plugins": ["jsx-control-statements"],
   "rules": {
     "strict": 0,
     "function-paren-newline": 0,
@@ -37,6 +38,7 @@
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "react/no-multi-comp": 0,
-    "consistent-return": 0
+    "consistent-return": 0,
+    "react/jsx-no-undef": [2, { "allowGlobals": true }]
   }
 }
