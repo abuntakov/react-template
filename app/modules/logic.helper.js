@@ -35,4 +35,5 @@ export const createLoadEntitiesProcess = (entityName, actionsFn) => async ({ htt
 export const createLoadEntitiesLogic = (entityName, actionsFn) => createLogic({
   type: createRequestActionName('load')(entityName),
   process: createLoadEntitiesProcess(entityName, actionsFn),
+  latest: true,
 })

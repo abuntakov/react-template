@@ -5,8 +5,9 @@ import { createAction, createFailureActionName } from './modules/action.helper'
 const getErrorCode = _get('payload.errorCode')
 const omitErrorCode = _omit('errorCode')
 const isGlobalError = action => getErrorCode(action) < 0
-const sleep = time => new Promise(res => setTimeout(res, time * 1000))
 const globalErrorAction = createAction(createFailureActionName('connection')('app'))
+
+const actionsQueue = {}
 
 function forwardErrorToApp(store, { payload, prevAction: { executeWithDelay = 3 } }) {
   store.dispatch(globalErrorAction({
@@ -16,11 +17,14 @@ function forwardErrorToApp(store, { payload, prevAction: { executeWithDelay = 3 
 }
 
 async function repeatAction(store, { prevAction: { executeWithDelay = 3, ...prevAction } }) {
-  await sleep(executeWithDelay)
-  store.dispatch({
-    ...prevAction,
-    executeWithDelay: Math.min(executeWithDelay * 2, 60)
-  })
+  clearTimeout(actionsQueue[prevAction.type])
+  const timerId = setTimeout(() => {
+    store.dispatch({
+      ...prevAction,
+      executeWithDelay: Math.min(executeWithDelay * 2, 60)
+    })
+  }, executeWithDelay * 1000)
+  actionsQueue[prevAction.type] = timerId
 }
 
 export const catchErrors = store => next => (action) => {
