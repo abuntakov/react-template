@@ -7,10 +7,6 @@
 		"secret": "secretcodehere",
 		"secure": false
 	},
-	"redis": {
-		"host": "localhost",
-		"port":6379
-	},
 	"mongoose": {
 		"uri": "mongodb://localhost/dbname"
 	}

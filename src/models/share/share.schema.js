@@ -7,6 +7,8 @@ const schema = {
   description: String,
   image: String,
   url: String,
+  queryId: String,
+  state: {},
 }
 
 const schemaKeys = _.keys(schema)

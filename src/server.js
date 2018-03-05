@@ -2,7 +2,6 @@ const Koa = require('koa')
 const config = require('./config')
 const morgan = require('koa-morgan')
 const session = require('koa-session')
-const redisStore = require('koa-redis')
 const bodyParser = require('koa-bodyparser')
 const routes = require('./routes')
 const errorHandler = require('./middlewares/errorHandler')
@@ -22,8 +21,6 @@ const sessionConfig = {
   cookie: {
     maxAge,
   },
-
-  store: redisStore({}),
 }
 
 const app = new Koa()
