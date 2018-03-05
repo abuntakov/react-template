@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux'
 
 class MapContainer extends React.Component {
   render() {
-    return null
+    const { location } = this.props
+    return (
+      <div>Your location is {JSON.stringify(location)}</div>
+    )
   }
 }
 
