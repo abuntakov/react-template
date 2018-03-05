@@ -136,7 +136,7 @@ module.exports = {
       template: './index.html',
     }),
     new StatsWriterPlugin({
-      filename: 'bundle.json',
+      filename: 'stats.json',
       transform: ({ assetsByChunkName }) => JSON.stringify(_mapValuesAndGroup(assetsByChunkName), null, 2)
     }),
     new webpack.DefinePlugin({

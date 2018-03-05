@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const mongoose = require('libs/mongoose')
+const mongoose = require('libs/mongoose') // eslint-disable-line
 const {
   createEntity,
   readEntity,
