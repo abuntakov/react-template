@@ -1,11 +1,22 @@
 import {
   composeReducers,
-  getEmptyState,
+  getInitialState,
 } from '../reduce.helper'
 
 import actions from './actions'
 
-const initialState = getEmptyState()
+const initialState = getInitialState({
+  location: {
+    address: {
+      city: 'Москва',
+    },
+    kind: 'city',
+    position: {
+      lat: 55.751244,
+      lng: 37.618423,
+    },
+  }
+})
 
 
 function reducer(state = initialState, action) {
