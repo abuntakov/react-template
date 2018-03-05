@@ -5,7 +5,6 @@ import _isNil from 'lodash/fp/isNil'
 
 import * as YandexProvider from './YandexProvider'
 
-
 export const getUserLocation = () => (
   new Promise((resolve, reject) => {
     if (!navigator.geolocation) return reject()
@@ -18,12 +17,12 @@ export const getUserLocation = () => (
     }))
 )
 
-export async function resolveAddressByLocation(
-  location,
+export async function resolveLocationByPosition(
+  position,
   { provider } = { provider: 'yandex' }
 ) {
   if (provider === 'yandex') {
-    return YandexProvider.resolveAddress(location)
+    return YandexProvider.resolveLocationByPosition(position)
   }
 
   return {}
@@ -34,7 +33,7 @@ export async function resolveLocationByAddress(
   { provider } = { provider: 'yandex' }
 ) {
   if (provider === 'yandex') {
-    return YandexProvider.resolveLocation(address)
+    return YandexProvider.resolveLocationByAddress(address)
   }
 
   return {}
