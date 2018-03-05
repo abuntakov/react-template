@@ -2,12 +2,11 @@
 
 const webpack = require('webpack')
 const path = require('path')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const _compact = require('lodash/fp/compact')
-
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV !== 'production'
 const extractScss = new ExtractTextPlugin({

@@ -1,0 +1,13 @@
+{
+	"port": 3000,
+	"skipEmailActivation": false,
+	"domain": "localhost:3000",
+	"protocol": "http",
+	"session": {
+		"secret": "secretcodehere",
+		"secure": false
+	},
+	"mongoose": {
+		"uri": "mongodb://localhost/dbname"
+	}
+}
