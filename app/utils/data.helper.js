@@ -1,6 +1,8 @@
 import moment from 'moment'
-import l10n from '@locale/strings_ru'
 import _keyBy from 'lodash/fp/keyBy'
+
+import l10n from '@locale/strings_ru'
+import { DateFormat } from '@app/constants'
 
 const toMap = _keyBy('id')
 
@@ -9,12 +11,7 @@ export const normalize = items => ({
   entities: toMap(items)
 })
 
-export const DEFAULT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm'
-export const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY'
-export const DEFAULT_TIME_FORMAT = 'HH:mm'
-export const RFC3339 = 'YYYY-MM-DDTHH:mm:ss[Z]'
-
-export function prettyDate(date, format = DEFAULT_DATETIME_FORMAT) {
+export function prettyDate(date, format = DateFormat.DefaultDateTime) {
   return moment(date).format(format)
 }
 
