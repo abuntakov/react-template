@@ -37,8 +37,6 @@ export const getDefaultState = () => fromJS({
   loading: false,
 })
 
-export const getEmptyState = () => fromJS({})
-
 export const composeReducers = (...reducers) => (state, action) => (
   reducers
     .reduce(
