@@ -1,23 +1,23 @@
+import _snakeCase from 'lodash/fp/snakeCase'
+import _pipe from 'lodash/fp/pipe'
 import _toUpper from 'lodash/fp/toUpper'
 
-const getPrefix = actionName => entityName => (
-  `${_toUpper(actionName)}_${_toUpper(entityName)}`
-)
+const normalizeName = _pipe([_snakeCase, _toUpper])
 
-export const createActionName = actionName => entityName => (
-  `${getPrefix(actionName)(entityName)}`
+const createActionName = actionName => entityName => (
+  `${normalizeName(actionName)}_${normalizeName(entityName)}`
 )
 
 export const createRequestActionName = actionName => entityName => (
-  `${getPrefix(actionName)(entityName)}_REQUEST`
+  `${createActionName(actionName)(entityName)}_REQUEST`
 )
 
 export const createSuccessActionName = actionName => entityName => (
-  `${getPrefix(actionName)(entityName)}_SUCCESS`
+  `${createActionName(actionName)(entityName)}_SUCCESS`
 )
 
 export const createFailureActionName = actionName => entityName => (
-  `${getPrefix(actionName)(entityName)}_FAILURE`
+  `${createActionName(actionName)(entityName)}_FAILURE`
 )
 
 export const createAction = actionName => payload => ({

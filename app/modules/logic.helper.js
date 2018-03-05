@@ -51,6 +51,6 @@ export const createPromiseLogic = (entityName, actionName, promiseFn) => createL
     successType: createSuccessActionName(actionName)(entityName),
     failType: createFailureActionName(actionName)(entityName),
   },
-  process: createPromiseProcess(promiseFn),
+  process: () => promiseFn,
   latest: true,
 })
