@@ -42,9 +42,6 @@ export const createLoadEntitiesLogic = (entityName, actionName, actionsFn) => cr
   latest: true,
 })
 
-
-export const createPromiseProcess = promiseFn => () => promiseFn()
-
 export const createPromiseLogic = (entityName, actionName, promiseFn) => createLogic({
   type: createRequestActionName(actionName)(entityName),
   processOptions: {
