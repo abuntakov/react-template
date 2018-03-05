@@ -1,7 +1,7 @@
-const UserRoutes = require('./user')
-const OgRoutes = require('./og')
+const RootRoutes = require('./root')
+const ShareRoutes = require('./share')
 
 module.exports = (app) => {
-  UserRoutes(app)
-  OgRoutes(app)
+  RootRoutes(app)
+  ShareRoutes(app)
 }

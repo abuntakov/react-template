@@ -1,4 +1,4 @@
-const mongoose = require('libs/mongoose') // eslint-disable-line
+const mongoose = require('libs/mongoose')
 const {
   addCrudMethods,
 } = require('../crud')

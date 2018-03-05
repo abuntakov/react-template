@@ -1,6 +1,6 @@
 const _ = require('lodash/fp')
 const mongoose = require('mongoose')
-const i18n = require('libs/i18n') // eslint-disable-line
+const i18n = require('libs/i18n')
 
 const {
   emailValidator,
