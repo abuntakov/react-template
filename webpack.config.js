@@ -2,12 +2,17 @@
 
 const webpack = require('webpack')
 const path = require('path')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { StatsWriterPlugin } = require('webpack-stats-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const _compact = require('lodash/fp/compact')
+const _endsWithJs = require('lodash/fp/endsWith')('js')
 
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const getExtension = filename => ['css', 'js'][+_endsWithJs(filename)]
+const _groupByExtension = require('lodash/fp/groupBy')(getExtension)
+const _mapValuesAndGroup = require('lodash/fp/mapValues')(_groupByExtension)
 
 const isDev = process.env.NODE_ENV !== 'production'
 const extractScss = new ExtractTextPlugin({
@@ -129,6 +134,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: '',
       template: './index.html',
+    }),
+    new StatsWriterPlugin({
+      filename: 'bundle.json',
+      transform: ({ assetsByChunkName }) => JSON.stringify(_mapValuesAndGroup(assetsByChunkName), null, 2)
     }),
     new webpack.DefinePlugin({
       DEVELOPMENT: JSON.stringify(isDev),
