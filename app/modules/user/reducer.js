@@ -11,5 +11,5 @@ function reducer(state = initialState) {
   return state
 }
 
-export default composeReducers(reducer, loadEntityReducer('user'))
+export default composeReducers(reducer, loadEntityReducer('users'))
 

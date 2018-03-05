@@ -3,19 +3,16 @@ import {
   getEmptyState,
 } from '../reduce.helper'
 
-import {
-  getLocationSuccess,
-  getLocationFailure,
-} from './actions'
+import actions from './actions'
 
 const initialState = getEmptyState()
 
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case getLocationSuccess:
+    case actions.GET_APP_LOCATION_SUCCESS:
       return state.set('location', action.payload)
-    case getLocationFailure:
+    case actions.GET_APP_LOCATION_FAILURE:
       return state.delete('location')
     default:
       return state

@@ -28,7 +28,7 @@ function getAddress(response) {
   }
 }
 
-function getLocation(response) {
+function getPosition(response) {
   const geoObj = response
     .GeoObjectCollection
     .featureMember[0]
@@ -51,7 +51,7 @@ function getLocation(response) {
   }
 
   return {
-    location: {
+    position: {
       lat: parseFloat(lat),
       lng: parseFloat(lng),
     },
@@ -60,13 +60,21 @@ function getLocation(response) {
   }
 }
 
-export const resolveAddress = async ({ lat, lng }) => {
-  const url = `https://geocode-maps.yandex.ru/1.x/?format=json&results=1&geocode=${lng},${lat}`
-  const res = await axios.get(url, { withCredentials: false })
-  return getAddress(res.data.response)
+function getLocation(response) {
+  const addressResult = getAddress(response)
+  const positionResult = getPosition(response)
+
+  return { ...addressResult, ...positionResult }
 }
 
-export async function resolveLocation({
+export const resolveLocationByPosition = async ({ lat, lng }) => {
+  const url = `https://geocode-maps.yandex.ru/1.x/?format=json&results=1&geocode=${lng},${lat}`
+  const res = await axios.get(url, { withCredentials: false })
+
+  return getLocation(res.data.response)
+}
+
+export async function resolveLocationByAddress({
   country,
   city,
   street,
@@ -95,10 +103,7 @@ export async function resolveLocation({
   url = url.split(' ').join('+')
   try {
     const { data } = await axios.get(url, { withCredentials: false })
-    const addressResult = getAddress(data.response)
-    const locationResult = getLocation(data.response)
-
-    return { ...addressResult, ...locationResult }
+    return getLocation(data.response)
   } catch (e) {
     return {}
   }

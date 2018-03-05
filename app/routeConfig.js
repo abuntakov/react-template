@@ -3,10 +3,12 @@ import PageNotFound from './pages/Error/PageNotFound'
 
 import HomeRoute from './pages/Home/route'
 import UsersRoute from './pages/Users/route'
+import MapRoute from './pages/Map/route'
 
 const childRoutes = [
   HomeRoute,
   UsersRoute,
+  MapRoute,
 ]
 
 const routes = [{
