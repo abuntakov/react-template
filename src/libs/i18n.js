@@ -2,8 +2,8 @@ const i18n = require('i18n')
 const path = require('path')
 
 i18n.configure({
-  directory: path.resolve(__dirname, '../locales'),
-  defaultLocale: 'en',
+  directory: path.resolve(__dirname, '../../locale'),
+  defaultLocale: 'ru',
   cookie: 'lang',
 })
 
