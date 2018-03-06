@@ -5,6 +5,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+
 const _compact = require('lodash/fp/compact')
 
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
@@ -43,7 +44,7 @@ module.exports = {
       'react-hot-loader/patch',
       './styles/index.scss',
       './index',
-    ],
+    ]
   },
 
   output: {
@@ -121,6 +122,19 @@ module.exports = {
     ],
   },
 
+/*  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    }
+  },*/
+
 
   plugins: _compact([
     !isDev && new CleanWebpackPlugin(['dist'], { dry: isDev }),
@@ -133,6 +147,23 @@ module.exports = {
     new webpack.DefinePlugin({
       DEVELOPMENT: JSON.stringify(isDev),
     }),
+    new webpack.optimize.SplitChunksPlugin({
+      chunks: 'all',
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      name: 'vendor',
+      cacheGroups: {
+        default: false,
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    })
     // new BundleAnalyzerPlugin(),
   ]),
 }
+
