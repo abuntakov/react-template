@@ -38,7 +38,7 @@ module.exports = {
 
   entry: {
     index: [
-      'babel-polyfill',
+      '@babel/polyfill',
       'react-hot-loader/patch',
       './styles/index.scss',
       './index',
