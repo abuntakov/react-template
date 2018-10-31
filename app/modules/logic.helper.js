@@ -1,53 +1,70 @@
 import _compose from 'lodash/fp/compose'
 import _upperFirst from 'lodash/fp/upperFirst'
-
+import _identity from 'lodash/fp/identity'
 import { createLogic } from 'redux-logic'
 
 import * as routes from '@app/apiRoutes'
 
 import {
+  createAction,
   createRequestActionName,
   createSuccessActionName,
   createFailureActionName,
 } from './action.helper'
 
-const injectPrevAction = prevAction => action => ({
+const injectPrevAction = prevAction => ({ extra = {}, ...action }) => ({
   ...action,
   prevAction,
+  extra: {
+    ...((prevAction || {}).extra || {}),
+    ...extra,
+  }
 })
 
-export const createLoadEntitiesProcess = (entityName, actionName, actionsFn) => async ({ httpClient, action }, dispatch, done) => {
+export const createEntitiesRequestProcess = (
+  entityName,
+  actionGroup,
+  {
+    normalizer = _identity,
+    onSuccess = _identity,
+    onFailure = _identity,
+  } = {}
+) => async ({ httpClient, action }, dispatch, done) => {
   const EntityName = _upperFirst(entityName)
 
   try {
-    const result = await httpClient(routes[`${actionName}${EntityName}`]())
+    const result = await httpClient(routes[`${actionGroup}${EntityName}`](action.payload), action.extra)
     _compose(
       dispatch,
-      actionsFn[`${actionName}${EntityName}Success`]
+      onSuccess,
+      normalizer,
+      injectPrevAction(action),
+      createAction(createSuccessActionName(entityName, actionGroup)),
     )(result)
   } catch (error) {
     _compose(
       dispatch,
+      onFailure,
       injectPrevAction(action),
-      actionsFn[`${actionName}${EntityName}Failure`]
+      createAction(createFailureActionName(entityName, actionGroup)),
     )(error)
   }
 
   done()
 }
 
-export const createLoadEntitiesLogic = (entityName, actionName, actionsFn) => createLogic({
-  type: createRequestActionName(actionName)(entityName),
-  process: createLoadEntitiesProcess(entityName, actionName, actionsFn),
-  latest: true,
+export const createEntitiesRequestLogic = (entityName, actionGroup, { latest = true, ...extraParams } = {}) => createLogic({
+  type: createRequestActionName(entityName, actionGroup),
+  process: createEntitiesRequestProcess(entityName, actionGroup, extraParams),
+  latest,
 })
 
-export const createPromiseLogic = (entityName, actionName, promiseFn) => createLogic({
-  type: createRequestActionName(actionName)(entityName),
+export const createPromiseLogic = (entityName, actionGroup, promiseFn) => createLogic({
+  type: createRequestActionName(entityName, actionGroup),
   processOptions: {
-    successType: createSuccessActionName(actionName)(entityName),
-    failType: createFailureActionName(actionName)(entityName),
+    successType: createSuccessActionName(entityName, actionGroup),
+    failType: createFailureActionName(entityName, actionGroup),
   },
-  process: () => promiseFn,
+  process: ({ action }) => promiseFn(action.payload, action),
   latest: true,
 })

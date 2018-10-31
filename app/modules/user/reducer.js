@@ -1,6 +1,6 @@
 import {
   getDefaultState,
-  loadEntityReducer,
+  entityRequestReducer,
   composeReducers,
 } from '../reduce.helper'
 
@@ -11,4 +11,4 @@ function reducer(state = initialState) {
   return state
 }
 
-export default composeReducers(reducer, loadEntityReducer('users'))
+export default composeReducers(reducer, entityRequestReducer('users', 'load'))

@@ -4,23 +4,24 @@ import _toUpper from 'lodash/fp/toUpper'
 
 const normalizeName = _pipe([_snakeCase, _toUpper])
 
-const createActionName = actionName => entityName => (
-  `${normalizeName(actionName)}_${normalizeName(entityName)}`
+export const createActionName = (entityName, actionGroup) => (
+  `${normalizeName(actionGroup)}_${normalizeName(entityName)}`
 )
 
-export const createRequestActionName = actionName => entityName => (
-  `${createActionName(actionName)(entityName)}_REQUEST`
+export const createRequestActionName = (entityName, actionGroup) => (
+  `${createActionName(entityName, actionGroup)}_REQUEST`
 )
 
-export const createSuccessActionName = actionName => entityName => (
-  `${createActionName(actionName)(entityName)}_SUCCESS`
+export const createSuccessActionName = (entityName, actionGroup) => (
+  `${createActionName(entityName, actionGroup)}_SUCCESS`
 )
 
-export const createFailureActionName = actionName => entityName => (
-  `${createActionName(actionName)(entityName)}_FAILURE`
+export const createFailureActionName = (entityName, actionGroup) => (
+  `${createActionName(entityName, actionGroup)}_FAILURE`
 )
 
-export const createAction = actionName => payload => ({
+export const createAction = actionName => (payload, extra = {}) => ({
   type: actionName,
   payload,
+  extra,
 })

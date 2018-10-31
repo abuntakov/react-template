@@ -5,7 +5,7 @@ import { createAction, createFailureActionName } from './modules/action.helper'
 const getErrorCode = _get('payload.errorCode')
 const omitErrorCode = _omit('errorCode')
 const isGlobalError = action => getErrorCode(action) < 0
-const globalErrorAction = createAction(createFailureActionName('connection')('app'))
+const globalErrorAction = createAction(createFailureActionName('app', 'connection'))
 
 const actionsQueue = {}
 

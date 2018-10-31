@@ -1,7 +1,5 @@
-import { createLoadEntitiesLogic } from '../logic.helper'
-
-import * as actionsFn from './actions'
+import { createEntitiesRequestLogic } from '../logic.helper'
 
 export default [
-  createLoadEntitiesLogic('users', 'load', actionsFn)
+  createEntitiesRequestLogic('users', 'load')
 ]
