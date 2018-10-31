@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { ConnectedRouter } from 'react-router-redux'
+import { ConnectedRouter } from 'connected-react-router/immutable'
 import history from './history'
 
 const getComponentRoute = (contextPath, component) => (
@@ -52,10 +52,11 @@ function renderRouteConfigV3(Container, routes, contextPath) {
 
 export default class Root extends React.Component {
   render() {
-    const children = renderRouteConfigV3(null, this.props.routeConfig, '/')
+    const { store, routeConfig } = this.props
+    const children = renderRouteConfigV3(null, routeConfig, '/')
 
     return (
-      <Provider store={this.props.store}>
+      <Provider store={store}>
         <ConnectedRouter history={history}>
           {children}
         </ConnectedRouter>
@@ -63,4 +64,3 @@ export default class Root extends React.Component {
     )
   }
 }
-

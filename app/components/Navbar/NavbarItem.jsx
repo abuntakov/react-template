@@ -6,9 +6,12 @@ const hasChildren = item => !!(item.childRoutes && item.childRoutes.length)
 function getAbsolutePath(basePath, path) {
   if (/^\//.test(path)) {
     return path
-  } else if (basePath === '/') {
+  }
+
+  if (basePath === '/') {
     return `/${path}`
   }
+
   return `${basePath}/${path}`
 }
 

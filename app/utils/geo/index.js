@@ -81,4 +81,3 @@ export function isPolygonContainsPoint(polygon, point) {
 
   return inside
 }
-

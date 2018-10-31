@@ -2,7 +2,7 @@
 
 const webpack = require('webpack')
 const path = require('path')
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -19,7 +19,6 @@ const extractScssRule = (type) => {
   const use = [
     { loader: 'css-loader' },
     { loader: 'postcss-loader' },
-    // { loader: 'resolve-url-loader' }
   ]
 
   if (type !== 'css') {
@@ -121,19 +120,6 @@ module.exports = {
     ],
   },
 
-/*  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        default: false,
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all'
-        }
-      }
-    }
-  },*/
-
 
   plugins: _compact([
     !isDev && new CleanWebpackPlugin(['dist'], { dry: isDev }),
@@ -146,7 +132,7 @@ module.exports = {
     new webpack.DefinePlugin({
       DEVELOPMENT: JSON.stringify(isDev),
     }),
-    new webpack.optimize.SplitChunksPlugin({
+    !isDev && new webpack.optimize.SplitChunksPlugin({
       chunks: 'all',
       minSize: 30000,
       minChunks: 1,
@@ -162,7 +148,6 @@ module.exports = {
         }
       }
     })
-    // new BundleAnalyzerPlugin(),
   ]),
 }
 

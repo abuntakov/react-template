@@ -2,7 +2,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { createLogicMiddleware } from 'redux-logic'
 
-import { routerMiddleware } from 'react-router-redux'
+import { routerMiddleware, connectRouter } from 'connected-react-router/immutable'
 import history from './history'
 import rootReducer from './modules/reducers'
 import logic from './modules/logics'
@@ -33,7 +33,7 @@ if (DEVELOPMENT) {
 }
 
 export default function configureStore(initialState) {
-  const store = createStore(rootReducer, initialState, compose(
+  const store = createStore(connectRouter(history)(rootReducer), initialState, compose(
     applyMiddleware(...middlewares),
     devToolsExtension
   ))

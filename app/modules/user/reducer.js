@@ -12,4 +12,3 @@ function reducer(state = initialState) {
 }
 
 export default composeReducers(reducer, loadEntityReducer('users'))
-

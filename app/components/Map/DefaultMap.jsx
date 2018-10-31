@@ -24,7 +24,7 @@ export default class DefaultMap extends React.Component {
     logger.debug('Render default map', mapProps)
 
     return (
-      <Map {...mapProps} >
+      <Map {...mapProps}>
         <TileLayer />
         <Polyline positions={positions} />
         <For each="position" index="idx" of={positions}>
